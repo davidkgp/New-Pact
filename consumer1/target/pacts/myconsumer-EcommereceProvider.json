@@ -1,0 +1,51 @@
+{
+  "provider": {
+    "name": "EcommereceProvider"
+  },
+  "consumer": {
+    "name": "myconsumer"
+  },
+  "interactions": [
+    {
+      "description": "get Product list",
+      "request": {
+        "method": "GET",
+        "path": "/app/manufacturers/name/Apple"
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "manufacturerVOs": [
+            {
+              "manufacturerId": "5678",
+              "manufacturerName": "Apple",
+              "manufacturerAddress": "Bangalore",
+              "productsList": [
+                {
+                  "productId": "1007",
+                  "productName": "Apple Mack book Pro",
+                  "productType": "Laptop",
+                  "price": 90000.0
+                },
+                {
+                  "productId": "1008",
+                  "productName": "mack book Air",
+                  "productType": "Laptop",
+                  "price": 75000.0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.0.8"
+    }
+  }
+}
