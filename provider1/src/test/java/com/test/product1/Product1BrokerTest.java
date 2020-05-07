@@ -14,8 +14,15 @@ import au.com.dius.pact.provider.junit.target.TestTarget;
 @RunWith(PactRunner.class)
 //@PactFolder("C:\\Users\\Win10\\Downloads\\New-Pact-master\\New-Pact-master\\consumer1\\target\\pacts")
 @Provider("EcommereceProvider")
+@PactBroker//pass this in vm options -Dpactbroker.host=<Brokerhost> -Dpactbroker.protocol=<broker_protocol> -Dpactbroker.auth.scheme=bearer -Dpactbroker.auth.username=<Token>
 
-@PactBroker(host="localhost", port = "80")
+/*Simply pass what you need with -Dconnectionstring=foobar in the junit command line,
+or use the java api for system properties to set this programmatically,
+with System.setProperty(String name, String value), and System.getProperty(String name).
+
+In your tests, you can use the @Before or @BeforeClass to set up common objects based on this property, pending on whether you want to run the setup once for each test (in which case you can use class members) or once for each suite (and then use static members).
+
+You can even incorporate this behavior by using an abstract class which all your test cases extends.*/
 
 @VerificationReports(value = { "console", "markdown", "json" })
 
