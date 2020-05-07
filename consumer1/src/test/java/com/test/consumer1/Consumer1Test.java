@@ -36,7 +36,7 @@ public class Consumer1Test {
 	@Pact(consumer = "myconsumer") // will default to the provider name from
 									// mockProvider in Rule
 	public RequestResponsePact defineExpectation(PactDslWithProvider builder) {
-		return builder.uponReceiving("get Product list")
+		return builder.uponReceiving("get Product list by Apple")
 				.path("/app/manufacturers/name/Apple").method("GET").willRespondWith().status(200)
 				.body("{\n" +
                         "    \"manufacturerVOs\": [\n" +
@@ -47,13 +47,13 @@ public class Consumer1Test {
                         "            \"productsList\": [\n" +
                         "                {\n" +
                         "                    \"productId\": \"1007\",\n" +
-                        "                    \"productName\": \"Apple Mack book Pro\",\n" +
+                        "                    \"productName\": \"Apple MacBook Pro\",\n" +
                         "                    \"productType\": \"Laptop\",\n" +
                         "                    \"price\": 90000.0\n" +
                         "                },\n" +
                         "                {\n" +
                         "                    \"productId\": \"1008\",\n" +
-                        "                    \"productName\": \"mack book Air\",\n" +
+                        "                    \"productName\": \"MacBook Air\",\n" +
                         "                    \"productType\": \"Laptop\",\n" +
                         "                    \"price\": 75000.0\n" +
                         "                }\n" +
@@ -64,13 +64,70 @@ public class Consumer1Test {
 
 	
 	}
+	
+	@Pact(consumer = "myconsumer") // will default to the provider name from mockProvider in Rule
+
+    public RequestResponsePact defineExpectationWithState(PactDslWithProvider builder) {
+
+        return builder
+
+                .given("HP")
+
+                .uponReceiving("get product list by HP")
+
+                .path("/app/manufacturers/name/HP")
+
+                .method("GET")
+
+                .willRespondWith()
+
+                .status(200)
+
+                .body("{\n" + 
+                		"    \"manufacturerVOs\": [\n" + 
+                		"        {\n" + 
+                		"            \"manufacturerId\": \"5679\",\n" + 
+                		"            \"manufacturerName\": \"HP\",\n" + 
+                		"            \"manufacturerAddress\": \"Bangalore\",\n" + 
+                		"            \"productsList\": [\n" + 
+                		"                {\n" + 
+                		"                    \"productId\": \"1009\",\n" + 
+                		"                    \"productName\": \"ProBook\",\n" + 
+                		"                    \"productType\": \"Laptop\",\n" + 
+                		"                    \"price\": 83000.0\n" + 
+                		"                }\n" + 
+                		"            ]\n" + 
+                		"        }\n" + 
+                		"    ]\n" + 
+                		"}")
+
+                .toPact();
+
+    }
 
 	@Test 
-	@PactVerification
+
+    @PactVerification(fragment = "defineExpectation")
 	public void test() throws IOException {
 
 		Assert.assertTrue(consumerService.getProductList("Apple").isPresent());
 	}
+
+	
+	 @Test
+
+
+	    @PactVerification(fragment = "defineExpectationWithState")
+
+	    public void runTestWithState() throws IOException {
+
+
+
+	        Assert.assertTrue(consumerService.getProductList("HP").isPresent());
+
+
+
+	    }
 
 }
 
